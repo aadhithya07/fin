@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance pointing to your Node backend
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api', 
+  baseURL: 'https://fin-shp9.onrender.com/api', 
 });
 
 // This interceptor automatically adds your JWT token to the headers of every request
