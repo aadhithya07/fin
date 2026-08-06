@@ -20,3 +20,26 @@ A full-stack MERN (MongoDB, Express, React, Node.js) web application designed to
 2. Run `npm install` inside both the `frontend` and `backend` folders.
 3. Create a `.env` file in the backend with your `MONGO_URI` and `JWT_SECRET`.
 4. Run `npm run dev` in both folders.
+
+
+# 📊 Personal Finance Manager
+
+A full-stack MERN application that empowers users to track expenses, manage budgets, and visualize financial health.
+
+## 🚀 Live Demo
+**[Click here to view the live app](YOUR_LIVE_URL_HERE)**
+
+**Demo Credentials:**
+* **Email:** `reviewer@demo.com`
+* **Password:** `Reviewer123!`
+
+## ✨ Features
+* **JWT Authentication:** Secure user registration and login.
+* **Expense Tracking:** CRUD operations for daily financial transactions.
+* **Interactive Dashboard:** Visual breakdown of spending categories using Chart.js.
+* **Protected Routes:** Secure frontend and backend endpoints.
+
+## 💻 Tech Stack
+* **Frontend:** React, Tailwind CSS, Axios, Chart.js
+* **Backend:** Node.js, Express.js
+* **Database:** MongoDB, Mongoose

@@ -3,191 +3,78 @@ import axios from 'axios';
 
 const Expenses = () => {
   const [expenses, setExpenses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  
-  // Form state for adding a new expense
-  const [formData, setFormData] = useState({
-    description: '',
-    amount: '',
-    category: 'Food' // Default category
-  });
+  const [formData, setFormData] = useState({ description: '', amount: '', category: 'Food' });
 
-  // 1. FETCH EXPENSES ON LOAD
+  // Fetch expenses
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        // Grab the ID Badge (Token)
-        const user = JSON.parse(localStorage.getItem('user'));
-        const token = user?.token || localStorage.getItem('token');
-
-        const config = {
+        const token = JSON.parse(localStorage.getItem('user'))?.token;
+        const { data } = await axios.get('http://localhost:5000/api/expenses', {
           headers: { Authorization: `Bearer ${token}` }
-        };
-
-        const response = await axios.get('http://localhost:5000/api/expenses', config);
-        setExpenses(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Failed to fetch expenses:', err);
-        setError('Could not load expenses. Make sure you are logged in.');
-        setLoading(false);
+        });
+        setExpenses(data);
+      } catch (error) {
+        console.error("Error fetching expenses", error);
       }
     };
-
     fetchExpenses();
   }, []);
 
-  // 2. HANDLE FORM INPUT CHANGES
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // 3. SUBMIT NEW EXPENSE
+  // Handle Form Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
     try {
-      // Grab the ID Badge (Token)
-      const user = JSON.parse(localStorage.getItem('user'));
-      const token = user?.token || localStorage.getItem('token');
-
-      const config = {
+      const token = JSON.parse(localStorage.getItem('user'))?.token;
+      const { data } = await axios.post('http://localhost:5000/api/expenses', formData, {
         headers: { Authorization: `Bearer ${token}` }
-      };
-
-      // Send the data to the backend
-      const response = await axios.post('http://localhost:5000/api/expenses', formData, config);
-      
-      // Add the new expense to our list instantly without refreshing the page
-      setExpenses([response.data, ...expenses]);
-      
-      // Clear the form
+      });
+      setExpenses([data, ...expenses]);
       setFormData({ description: '', amount: '', category: 'Food' });
-    } catch (err) {
-      console.error('Failed to add expense:', err);
-      setError('Failed to add expense. Please try again.');
+    } catch (error) {
+      console.error("Error adding expense", error);
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Manage Expenses</h1>
+    <div className="p-8 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Left: Form */}
+      <div className="bg-white p-6 shadow rounded">
+        <h2 className="text-xl font-bold mb-4">Add Expense</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input type="text" placeholder="Description" required className="border p-2 rounded"
+            value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
+          <input type="number" placeholder="Amount" required className="border p-2 rounded"
+            value={formData.amount} onChange={(e) => setFormData({...formData, amount: e.target.value})} />
+          <select className="border p-2 rounded" value={formData.category} 
+            onChange={(e) => setFormData({...formData, category: e.target.value})}>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Housing">Housing</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+          <button type="submit" className="bg-blue-600 text-white p-2 rounded">Add Transaction</button>
+        </form>
+      </div>
 
-      {error && (
-        <div className="mb-4 p-4 text-red-700 bg-red-100 rounded-lg">
-          {error}
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        {/* LEFT COLUMN: Add Expense Form */}
-        <div className="md:col-span-1 bg-white p-6 rounded-lg shadow-md h-fit">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Add New Expense</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Description</label>
-              <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                placeholder="e.g., Groceries"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Amount ($)</label>
-              <input
-                type="number"
-                name="amount"
-                value={formData.amount}
-                onChange={handleChange}
-                required
-                min="0.01"
-                step="0.01"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                placeholder="0.00"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Category</label>
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-              >
-                <option value="Food">Food</option>
-                <option value="Housing">Housing</option>
-                <option value="Transport">Transport</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Utilities">Utilities</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-            >
-              Add Expense
-            </button>
-          </form>
-        </div>
-
-        {/* RIGHT COLUMN: Expenses List */}
-        <div className="md:col-span-2 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Expense History</h2>
-          
-          {loading ? (
-            <div className="text-gray-500 text-center py-8">Loading expenses...</div>
-          ) : expenses.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {expenses.map((expense) => (
-                    <tr key={expense._id || Math.random()}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(expense.createdAt || Date.now()).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {expense.description}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                          {expense.category}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 text-right">
-                        ${Number(expense.amount).toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-48 text-gray-500 italic bg-gray-50 rounded border border-dashed border-gray-300">
-              <p>No expenses found.</p>
-              <p className="text-sm">Use the form on the left to add your first transaction!</p>
-            </div>
-          )}
-        </div>
-
+      {/* Right: Table */}
+      <div className="md:col-span-2 bg-white p-6 shadow rounded">
+        <h2 className="text-xl font-bold mb-4">Recent Expenses</h2>
+        <table className="w-full text-left">
+          <thead>
+            <tr className="border-b"><th className="pb-2">Date</th><th className="pb-2">Description</th><th className="pb-2">Category</th><th className="pb-2">Amount</th></tr>
+          </thead>
+          <tbody>
+            {expenses.map((exp) => (
+              <tr key={exp._id} className="border-b">
+                <td className="py-2">{new Date(exp.createdAt).toLocaleDateString()}</td>
+                <td className="py-2">{exp.description}</td>
+                <td className="py-2">{exp.category}</td>
+                <td className="py-2 font-bold">${exp.amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
