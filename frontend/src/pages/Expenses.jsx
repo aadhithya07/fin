@@ -32,7 +32,7 @@ const Expenses = () => {
       const token = user?.token;
       
       // REPLACE WITH YOUR LIVE RENDER URL
-      const { data } = await axios.post('https://YOUR-RENDER-URL.onrender.com/api/expenses', formData, {
+      const { data } = await axios.post('https://fin-shp9.onrender.com', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
