@@ -10,7 +10,7 @@ const Expenses = () => {
     const fetchExpenses = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('user'))?.token;
-        const { data } = await axios.get('http://localhost:5000/api/expenses', {
+        const { data } = await axios.get('https://fin-shp9.onrender.com', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setExpenses(data);
@@ -26,7 +26,7 @@ const Expenses = () => {
     e.preventDefault();
     try {
       const token = JSON.parse(localStorage.getItem('user'))?.token;
-      const { data } = await axios.post('http://localhost:5000/api/expenses', formData, {
+      const { data } = await axios.post('https://fin-shp9.onrender.com', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setExpenses([data, ...expenses]);
