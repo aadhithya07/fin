@@ -15,17 +15,16 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // 1. Send the network request to your LIVE backend
+      // REPLACE WITH YOUR LIVE RENDER URL
       const response = await axios.post('https://fin-shp9.onrender.com', {
         email,
         password,
       });
 
-      // 2. The Critical Step: Save the entire package (including the token) to the browser
+      // Save the entire package (including the token) to the browser
       localStorage.setItem('user', JSON.stringify(response.data));
 
-      // 3. Force the app to navigate to the dashboard 
-      // (Using window.location ensures the Navbar catches the new token immediately)
+      // Force the app to navigate to the dashboard 
       window.location.href = '/dashboard';
       
     } catch (err) {
@@ -53,7 +52,7 @@ const Login = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label-[email] className="sr-only">Email address</label-[email]>
+              <label className="sr-only">Email address</label>
               <input
                 type="email"
                 required
@@ -64,7 +63,7 @@ const Login = () => {
               />
             </div>
             <div>
-              <label-[password] className="sr-only">Password</label-[password]>
+              <label className="sr-only">Password</label>
               <input
                 type="password"
                 required
