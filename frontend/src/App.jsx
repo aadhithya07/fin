@@ -7,9 +7,7 @@ import Navbar from "./components/Navbar.jsx";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-
-// We will build this next!
-const Expenses = () => <div className="p-8 text-2xl font-bold">Expenses Page Coming Soon!</div>;
+import Expenses from './pages/Expenses'; // <-- This tells the app to use your real file!
 
 function App() {
   const { user, loading } = useContext(AuthContext);
