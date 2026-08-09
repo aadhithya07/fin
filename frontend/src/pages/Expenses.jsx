@@ -13,7 +13,7 @@ const Expenses = () => {
         const token = user?.token;
         
         // REPLACE WITH YOUR LIVE RENDER URL
-        const { data } = await axios.get('https://YOUR-RENDER-URL.onrender.com/api/expenses', {
+        const { data } = await axios.get('https://fin-shp9.onrender.com', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setExpenses(data);
