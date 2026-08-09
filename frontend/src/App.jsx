@@ -7,7 +7,8 @@ import Navbar from "./components/Navbar.jsx";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Expenses from './pages/Expenses'; // <-- This tells the app to use your real file!
+import Expenses from './pages/Expenses';
+import Transactions from './pages/Transactions'; // <-- Added import
 
 function App() {
   const { user, loading } = useContext(AuthContext);
@@ -27,6 +28,7 @@ function App() {
             {/* Protected Routes */}
             <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
             <Route path="/expenses" element={user ? <Expenses /> : <Navigate to="/login" />} />
+            <Route path="/transactions" element={user ? <Transactions /> : <Navigate to="/login" />} /> {/* <-- Added route */}
           </Routes>
         </main>
       </div>
