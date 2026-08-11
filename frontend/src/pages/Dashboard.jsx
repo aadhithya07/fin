@@ -31,7 +31,7 @@ const Dashboard = () => {
         // Note: Change this to your Render URL if testing production!
         const response = await axios.get('https://fin-shp9.onrender.com', config);
         
-        setExpenses(response.data);
+        setExpenses(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch (err) {
         console.error('Failed to fetch dashboard data:', err);

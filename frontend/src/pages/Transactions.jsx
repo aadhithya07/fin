@@ -18,8 +18,9 @@ const Transactions = () => {
         });
         
         // Sort newest first
-        const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setTransactions(sortedData);
+        const safeData = Array.isArray(data) ? data : [];
+const sortedData = safeData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+setTransactions(sortedData);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching transactions", error);
