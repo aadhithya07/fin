@@ -19,7 +19,7 @@ const Dashboard = () => {
         const token = user?.token || localStorage.getItem('token');
 
         if (!token) {
-          setError('Authentication required. Please log in.');
+          setError('.');
           setLoading(false);
           return;
         }
