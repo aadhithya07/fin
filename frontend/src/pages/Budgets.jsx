@@ -25,7 +25,7 @@ const Budgets = () => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem('user'));
     try {
-      const { data } = await axios.post('https://YOUR-RENDER-URL.onrender.com/api/budgets', formData, {
+      const { data } = await axios.post('https://fin-shp9.onrender.com/api/budgets', formData, {
         headers: { Authorization: `Bearer ${user?.token}` }
       });
       setBudgets([data, ...budgets]);
