@@ -1,7 +1,6 @@
-import Budget from '../models/Budget.js';
+const Budget = require('../models/Budget');
 
-// Get all budgets for the logged-in user
-export const getBudgets = async (req, res) => {
+const getBudgets = async (req, res) => {
   try {
     const budgets = await Budget.find({ user: req.user._id }).sort({ createdAt: -1 });
     res.json(budgets);
@@ -10,8 +9,7 @@ export const getBudgets = async (req, res) => {
   }
 };
 
-// Create a new budget
-export const createBudget = async (req, res) => {
+const createBudget = async (req, res) => {
   try {
     const { category, limit, period } = req.body;
 
@@ -28,3 +26,5 @@ export const createBudget = async (req, res) => {
     res.status(500).json({ message: 'Server error while creating budget' });
   }
 };
+
+module.exports = { getBudgets, createBudget };
