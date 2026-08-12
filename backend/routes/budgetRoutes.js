@@ -1,8 +1,12 @@
-const express = require('express');
+import express from 'express';
+import { getBudgets, createBudget } from '../controllers/budgetController.js';
+import { protect } from '../middleware/authMiddleware.js'; 
+
 const router = express.Router();
-const { getBudgets, createBudget } = require('../controllers/budgetController');
-const { protect } = require('../middleware/authMiddleware');
 
-router.route('/').get(protect, getBudgets).post(protect, createBudget);
+// Apply the 'protect' middleware so only logged-in users can access these routes
+router.route('/')
+  .get(protect, getBudgets)
+  .post(protect, createBudget);
 
-module.exports = router;
+export default router;

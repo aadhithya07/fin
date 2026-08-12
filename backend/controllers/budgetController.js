@@ -1,24 +1,30 @@
-const Budget = require('../models/Budget');
+import Budget from '../models/Budget.js';
 
-const getBudgets = async (req, res) => {
+// Get all budgets for the logged-in user
+export const getBudgets = async (req, res) => {
   try {
-    const budgets = await Budget.find({ user: req.user.id });
-    res.status(200).json(budgets);
+    const budgets = await Budget.find({ user: req.user._id }).sort({ createdAt: -1 });
+    res.json(budgets);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Server error while fetching budgets' });
   }
 };
 
-const createBudget = async (req, res) => {
+// Create a new budget
+export const createBudget = async (req, res) => {
   try {
-    const { category, limit, period, startDate, endDate } = req.body;
-    const budget = await Budget.create({
-      user: req.user.id, category, limit, period, startDate, endDate
+    const { category, limit, period } = req.body;
+
+    const budget = new Budget({
+      user: req.user._id,
+      category,
+      limit,
+      period,
     });
-    res.status(201).json(budget);
+
+    const savedBudget = await budget.save();
+    res.status(201).json(savedBudget);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Server error while creating budget' });
   }
 };
-
-module.exports = { getBudgets, createBudget };
