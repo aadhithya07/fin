@@ -13,9 +13,10 @@ const Expenses = () => {
         const token = user?.token;
         
         // REPLACE WITH YOUR LIVE RENDER URL
-        const { data } = await axios.get('https://fin-shp9.onrender.com', {
+        const { data } = await axios.get('https://fin-shp9.onrender.com/api/expenses', {
           headers: { Authorization: `Bearer ${token}` }
         });
+        console.log("Fetched expenses:", data);
         setExpenses(data);
       } catch (error) {
         console.error("Error fetching expenses", error);
@@ -102,7 +103,7 @@ const Expenses = () => {
                 </tr>
               </thead>
               <tbody>
-                {expenses.map((exp) => (
+                {expenses?.map((exp) => (
                   <tr key={exp._id} className="border-b border-gray-100 hover:bg-gray-50 transition duration-150">
                     <td className="py-3 px-2 text-sm text-gray-500">
                       {new Date(exp.createdAt).toLocaleDateString()}
