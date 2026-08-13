@@ -11,13 +11,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// API Routes
+// ACTIVE ROUTES (These must be perfectly exported in their respective files)
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/expenses', require('./routes/expenseRoutes'));
-app.use('/api/budgets', require('./routes/budgetRoutes'));
 
-// TODO: We will uncomment these as we build them!
-// app.use('/api/income', require('./routes/incomeRoutes'));
+// PENDING ROUTES (Keep these commented out until the files are actually built!)
+// app.use('/api/budgets', require('./routes/budgetRoutes')); 
+// app.use('/api/income', require('./routes/incomeRoutes')); 
 // app.use('/api/goals', require('./routes/goalRoutes'));
 
 app.get('/', (req, res) => {
