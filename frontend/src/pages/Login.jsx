@@ -16,7 +16,7 @@ const Login = () => {
 
     try {
       // REPLACE WITH YOUR LIVE RENDER URL
-      const response = await axios.post('https://fin-shp9.onrender.com', {
+      const response = await axios.post('https://fin-shp9.onrender.com/auth/login', {
         email,
         password,
       });

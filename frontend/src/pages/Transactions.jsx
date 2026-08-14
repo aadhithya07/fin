@@ -13,7 +13,7 @@ const Transactions = () => {
 
         // Fetching your expenses data to act as the transaction ledger
         // REPLACE WITH YOUR LIVE RENDER URL
-        const { data } = await axios.get('https://fin-shp9.onrender.com', {
+        const { data } = await axios.get('https://fin-shp9.onrender.com/api/expenses', {
           headers: { Authorization: `Bearer ${token}` }
         });
         

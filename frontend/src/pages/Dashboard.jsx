@@ -29,7 +29,7 @@ const Dashboard = () => {
         };
 
         // Note: Change this to your Render URL if testing production!
-        const response = await axios.get('https://fin-shp9.onrender.com', config);
+        const response = await axios.get('https://fin-shp9.onrender.com/api/expenses', config);
         
         setExpenses(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
