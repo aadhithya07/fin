@@ -10,7 +10,7 @@ const Budgets = () => {
       const user = JSON.parse(localStorage.getItem('user'));
       const token = user?.token;
       try {
-        const { data } = await axios.get('https://https://fin-shp9.onrender.com/api/budgets', {
+        const { data } = await axios.get('https://fin-shp9.onrender.com/api/budgets', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setBudgets(Array.isArray(data) ? data : []);
