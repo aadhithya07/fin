@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar.jsx";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import Expenses from './pages/Expenses';
 import Transactions from './pages/Transactions';
 import Budgets from './pages/Budgets'; // <-- Added the new Budgets import
@@ -28,6 +29,7 @@ function App() {
             
             {/* Protected Routes */}
             <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/expenses" element={user ? <Expenses /> : <Navigate to="/login" />} />
             <Route path="/transactions" element={user ? <Transactions /> : <Navigate to="/login" />} />
             <Route path="/budgets" element={user ? <Budgets /> : <Navigate to="/login" />} />

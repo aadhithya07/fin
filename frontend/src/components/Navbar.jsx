@@ -23,6 +23,7 @@ const Navbar = () => {
             {user ? (
               <>
                 <Link to="/" className="hover:text-blue-200">Dashboard</Link>
+                <Link to="/profile" className="hover:text-blue-200">Profile</Link> 
                 <Link to="/expenses" className="hover:text-blue-200">Expenses</Link>
                 <Link to="/transactions" className="hover:text-blue-200">Transactions</Link>
                 <Link to="/budgets" className="hover:text-blue-200">Budgets</Link> {/* <-- New Link Added Here */}
