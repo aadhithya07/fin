@@ -13,9 +13,9 @@ const Expenses = () => {
         const token = user?.token;
         
         // REPLACE WITH YOUR LIVE RENDER URL
-        const { data } = await axios.get('https://fin-shp9.onrender.com/api/expenses', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const { data } = await axios.post('https://fin-shp9.onrender.com/api/expenses', formData, {
+  headers: { Authorization: `Bearer ${token}` }
+});
         console.log("Fetched expenses:", data);
         setExpenses(data);
       } catch (error) {
