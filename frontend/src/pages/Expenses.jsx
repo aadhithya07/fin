@@ -27,23 +27,36 @@ const Expenses = () => {
 
   // 2. Handle adding a new expense
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const token = user?.token;
-      
-      // REPLACE WITH YOUR LIVE RENDER URL
-      const { data } = await axios.post('https://fin-shp9.onrender.com/api/expenses', formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      // Update UI immediately with the new expense
-      setExpenses([data, ...expenses]);
-      setFormData({ description: '', amount: '', category: 'Food' });
-    } catch (error) {
-      console.error("Error adding expense", error);
-    }
-  };
+  e.preventDefault();
+  
+  // 1. Grab the raw user data
+  const userData = JSON.parse(localStorage.getItem('user'));
+
+  // 2. The Bulletproof Token Finder (checks multiple common object structures)
+  const token = userData?.token || userData?.data?.token || userData?.userInfo?.token;
+
+  // 3. Safety Check: Stop the request and warn us if the token isn't found
+  if (!token) {
+    console.error("CRITICAL: Token is completely missing from Local Storage!");
+    alert("Authentication error: Please log out and log back in.");
+    return;
+  }
+
+  try {
+    const { data } = await axios.post('https://fin-shp9.onrender.com/api/expenses', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    
+    // Update the screen immediately
+    setExpenses([data, ...expenses]); 
+    setFormData({ description: '', amount: '', category: 'Food' });
+
+  } catch (error) {
+    console.error("Error adding expense", error);
+  }
+};
 
   return (
     <div className="p-8 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
