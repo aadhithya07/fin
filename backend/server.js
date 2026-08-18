@@ -14,6 +14,7 @@ app.use(express.json());
 // ACTIVE ROUTES (These must be perfectly exported in their respective files)
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/expenses', require('./routes/expenseRoutes'));
+app.use('/api/budgets', require('./routes/budgetRoutes'));
 
 // PENDING ROUTES (Keep these commented out until the files are actually built!)
 // app.use('/api/budgets', require('./routes/budgetRoutes')); 
