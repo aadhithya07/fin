@@ -105,7 +105,7 @@ const Budgets = () => {
             <option value="Entertainment">Entertainment</option>
             <option value="Utilities">Utilities</option>
           </select>
-          <input type="number" placeholder="Budget Limit ($)" required className="border p-2 rounded" value={formData.limit} onChange={(e) => setFormData({...formData, limit: e.target.value})} />
+          <input type="number" min="0" step="0.01" placeholder="Budget Limit ($)" required className="border p-2 rounded" value={formData.limit} onChange={(e) => setFormData({...formData, limit: e.target.value})} />
           <button type="submit" className={`font-bold py-2 px-4 rounded text-white ${editId ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'}`}>
             {editId ? "Save Changes" : "Save Budget"}
           </button>

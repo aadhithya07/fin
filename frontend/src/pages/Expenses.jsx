@@ -82,6 +82,8 @@ const Expenses = () => {
           />
           <input 
             type="number" 
+            min="0"
+            step="0.01"
             placeholder="Amount" 
             required 
             className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
